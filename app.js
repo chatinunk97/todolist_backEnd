@@ -7,6 +7,12 @@ const errorMiddleware = require("./middleware/error");
 const authRoute = require("./routes/auth-route");
 const todoRoute = require('./routes/todo-route')
 
+let allowCrossDomain = function(req,res,next){
+  res.header('Access-Control-Allow-Origin',"*"),
+  res.header('Access-Control-Allow-Headers',"*")
+  next()
+}
+app.use(allowCrossDomain)
 app.use(express.json());
 
 app.use("/user", authRoute);
