@@ -1,0 +1,12 @@
+REGISTER
+POST / auth / register
+BODY username,password,confirmPassword , email?
+
+LOGIN
+POST / auth / login
+BODY username,password
+
+
+CREATE TODO
+POST /TODO
+BODY title/completed ? / due_date ?

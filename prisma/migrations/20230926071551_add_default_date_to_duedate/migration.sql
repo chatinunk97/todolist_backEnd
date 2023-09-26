@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `todo` MODIFY `due_date` DATE NULL DEFAULT CURRENT_TIMESTAMP(3);
