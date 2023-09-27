@@ -5,6 +5,7 @@ const todoController = require('../controller/todo-controller')
 const authenticateMiddleware = require('../middleware/authenticate')
 
 router.use(authenticateMiddleware)
+router.get('/',todoController.getTodo)
 router.post('/',todoController.createTodo)
 
 

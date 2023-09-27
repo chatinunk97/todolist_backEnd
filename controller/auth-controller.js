@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res, next) => {
   try {
-    const { username, email, password} = req.body;
+    const { username, email, password,confirmPassword} = req.body;
     console.log(username ,email , password)
     const hashedPassword = await bcrypt.hash(password, 12);
     await prisma.user.create({
@@ -14,9 +14,9 @@ exports.register = async (req, res, next) => {
         password: hashedPassword,
       },
     });
-    res.status(201).json({ message: true });
+    res.status(201).json({ message : "Register Completed", success: true });
   } catch (error) {
-    res.json({ message: error.message });
+    // res.json({ message: error.message , success : false });
     next(error);
   }
 };
@@ -32,7 +32,7 @@ exports.login = async (req, res, next) => {
       },
     });
     if (!result) {
-      return res.json({ message: "User not found" });
+      return res.status(400).json({ message: "User not found" });
     }
     if (await bcrypt.compare(password, result.password)) {
       const payload = { id: result.id };
@@ -43,9 +43,9 @@ exports.login = async (req, res, next) => {
           expiresIn: process.env.JWT_EXPIRE || "0",
         }
       );
-      return res.json({ message: true, accessToken });
+      return res.json({ message : "Login Completed", accessToken });
     }
-    return res.json({ message: "Wrong Password" });
+    return res.status(400).json({ message: "Wrong Password" });
   } catch (error) {
     next(error);
   }

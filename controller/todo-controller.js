@@ -20,3 +20,18 @@ exports.createTodo = async (req, res, next) => {
     next(error);
   }
 };
+exports.getTodo = async(req,res,next) => {
+  const {user} = req
+  console.log(user)
+  try {
+    const result = await prisma.todo.findMany({
+      where:{
+        userId : user.id
+      }
+    })
+    console.log(result)
+    res.json(result)
+  } catch (error) {
+    next(error)
+  }
+}
