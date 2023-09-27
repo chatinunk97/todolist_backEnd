@@ -5,7 +5,7 @@ exports.createTodo = async (req, res, next) => {
 
     /// Validation here
 
-    await prisma.todo.create({
+    const result = await prisma.todo.create({
       data: {
         title,
         completed,
@@ -15,7 +15,7 @@ exports.createTodo = async (req, res, next) => {
         userId: req.user.id,
       },
     });
-    res.status(201).json({ message: "created" });
+    res.status(201).json({ message: "created", data : result });
   } catch (error) {
     next(error);
   }
